@@ -78,12 +78,20 @@ const QuioscoProvider = ({ children }) => {
   const crearOrden = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/ordenes", {
-        nombre,
-        pedido,
-        total,
-        fecha: Date.now().toString(),
-      });
+      await axios.post(
+        "/api/ordenes",
+        {
+          nombre,
+          pedido,
+          total,
+          fecha: Date.now().toString(),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       //Reiniciar App
       toast("Orden creada correctamente", { type: "success" });
@@ -92,7 +100,7 @@ const QuioscoProvider = ({ children }) => {
       setPaso(1);
       setNombre("");
       setTotal(0);
-      router.push("/");
+      await router.push("/");
     } catch (error) {
       console.log(error);
       toast("Error al crear la orden", { type: "error" });
