@@ -8,25 +8,27 @@ datasource db {
 }
 
 model Producto {
-    id Int @id @default(autoincrement())
-    nombre String
-    precio Float
-    imagen String
-    categoriaId Int
-    categoria Categoria @relation(fields: [categoriaId], references: [id])
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  precio      Float
+  imagen      String
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  @@index([categoriaId], map: "Producto_categoriaId_fkey")
 }
 
 model Categoria {
-    id Int @id @default(autoincrement())
-    nombre String
-    icono String
-    productos Producto[]
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  icono     String
+  productos Producto[]
 }
 
 model Orden {
-    id Int @id @default(autoincrement())
-    nombre String
-    fecha String
-    total Float
-    pedido Json
+  id     Int    @id @default(autoincrement())
+  nombre String
+  fecha  String
+  total  Float
+  pedido String @db.LongText
 }
